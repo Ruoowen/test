@@ -1,0 +1,11 @@
+@media (max-width: 768px) {
+    .nav-links {
+      @apply fixed top-0 right-0 h-screen w-64 bg-white shadow-xl;
+      transform: translateX(100%);
+      transition: transform 0.3s;
+  
+      &.active {
+        transform: translateX(0);
+      }
+    }
+  }

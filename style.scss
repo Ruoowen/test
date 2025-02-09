@@ -1,0 +1,46 @@
+// Design Variables
+$primary-color: #2A5CAA;
+$gradient-blue: linear-gradient(135deg, #2A5CAA 0%, #1D3A6B 100%);
+
+// Floating Navigation
+.floating-nav {
+  @apply fixed top-0 w-full py-6 px-8 flex justify-between items-center;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+
+  &.scrolled {
+    @apply bg-white shadow-lg;
+  }
+}
+
+// Hero Section
+.hero-section {
+  @apply h-screen flex items-center justify-center relative;
+  background: $gradient-blue;
+
+  h1 {
+    @apply text-6xl text-white font-bold mb-4;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+}
+
+// Service Card Animation
+.service-card {
+  @apply relative p-8 rounded-xl bg-white shadow-2xl overflow-hidden;
+  transition: transform 0.4s ease;
+
+  &::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-0;
+    transition: opacity 0.3s;
+  }
+
+  &:hover {
+    transform: translateY(-10px);
+
+    &::before {
+      opacity: 1;
+    }
+  }
+}

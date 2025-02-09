@@ -1,55 +1,35 @@
-// 点赞功能
-document.querySelectorAll('.like-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        this.classList.toggle('liked');
-    });
+// Scroll Animations
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+// Hero Text Animation
+gsap.to(".hero-section h1", {
+  opacity: 1,
+  y: 0,
+  duration: 1.5,
+  ease: "power4.out"
 });
 
-// 动态加载更多内容
-let page = 1;
-const loadMore = async () => {
-    const response = await fetch(`/api/content?page=${page}`);
-    const data = await response.json();
-    renderCards(data);
-    page++;
-};
-
-// 卡片渲染函数
-function renderCards(data) {
-    const grid = document.querySelector('.content-grid');
-    data.forEach(item => {
-        const card = document.createElement('article');
-        card.className = 'card';
-        card.innerHTML = `
-            <div class="card-header">
-                <img src="${item.avatar}" class="user-avatar">
-                <div class="user-info">
-                    <h3>${item.username}</h3>
-                    <p>${item.time}</p>
-                </div>
-            </div>
-            <div class="card-content">
-                <p>${item.content}</p>
-                <div class="media-container">
-                    <img src="${item.image}">
-                </div>
-            </div>
-            <div class="card-actions">
-                <button class="like-btn">♥ 点赞</button>
-                <button class="comment-btn">💬 评论</button>
-                <button class="share-btn">↗ 分享</button>
-            </div>
-        `;
-        grid.appendChild(card);
-    });
-}
-
-// 滚动加载
-window.addEventListener('scroll', () => {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
-        loadMore();
-    }
+// Service Card Stagger
+gsap.utils.toArray(".service-card").forEach((card, i) => {
+  gsap.from(card, {
+    scrollTrigger: {
+      trigger: card,
+      start: "top center+=100"
+    },
+    opacity: 0,
+    y: 50,
+    duration: 0.8,
+    delay: i * 0.2
+  });
 });
 
-// 初始化加载
-loadMore();
+// Navigation Scroll Effect
+window.addEventListener("scroll", () => {
+  const nav = document.querySelector(".floating-nav");
+  window.scrollY > 100 
+    ? nav.classList.add("scrolled")
+    : nav.classList.remove("scrolled");
+});
